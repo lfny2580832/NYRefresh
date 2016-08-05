@@ -13,6 +13,10 @@
 		4AAE3C761D546758005C5AED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AAE3C741D546758005C5AED /* Main.storyboard */; };
 		4AAE3C781D546758005C5AED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AAE3C771D546758005C5AED /* Assets.xcassets */; };
 		4AAE3C7B1D546758005C5AED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AAE3C791D546758005C5AED /* LaunchScreen.storyboard */; };
+		4AAE3C841D5467E8005C5AED /* TestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAE3C831D5467E8005C5AED /* TestVC.m */; };
+		4AAE3C8B1D546C21005C5AED /* UIScrollView+NYRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAE3C8A1D546C21005C5AED /* UIScrollView+NYRefresh.m */; };
+		4AAE3C8E1D546DCE005C5AED /* NYRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAE3C8D1D546DCE005C5AED /* NYRefreshHeader.m */; };
+		4AAE3C911D5479DA005C5AED /* UIView+NYRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAE3C901D5479DA005C5AED /* UIView+NYRefresh.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,14 @@
 		4AAE3C771D546758005C5AED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4AAE3C7A1D546758005C5AED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4AAE3C7C1D546758005C5AED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4AAE3C821D5467E8005C5AED /* TestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestVC.h; sourceTree = "<group>"; };
+		4AAE3C831D5467E8005C5AED /* TestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestVC.m; sourceTree = "<group>"; };
+		4AAE3C891D546C21005C5AED /* UIScrollView+NYRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+NYRefresh.h"; sourceTree = "<group>"; };
+		4AAE3C8A1D546C21005C5AED /* UIScrollView+NYRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+NYRefresh.m"; sourceTree = "<group>"; };
+		4AAE3C8C1D546DCE005C5AED /* NYRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYRefreshHeader.h; sourceTree = "<group>"; };
+		4AAE3C8D1D546DCE005C5AED /* NYRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NYRefreshHeader.m; sourceTree = "<group>"; };
+		4AAE3C8F1D5479DA005C5AED /* UIView+NYRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+NYRefresh.h"; sourceTree = "<group>"; };
+		4AAE3C901D5479DA005C5AED /* UIView+NYRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+NYRefresh.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +72,9 @@
 			children = (
 				4AAE3C6E1D546758005C5AED /* AppDelegate.h */,
 				4AAE3C6F1D546758005C5AED /* AppDelegate.m */,
-				4AAE3C711D546758005C5AED /* ViewController.h */,
-				4AAE3C721D546758005C5AED /* ViewController.m */,
-				4AAE3C741D546758005C5AED /* Main.storyboard */,
-				4AAE3C771D546758005C5AED /* Assets.xcassets */,
-				4AAE3C791D546758005C5AED /* LaunchScreen.storyboard */,
-				4AAE3C7C1D546758005C5AED /* Info.plist */,
+				4AAE3C851D546AA7005C5AED /* NYRefreshHeader */,
+				4AAE3C821D5467E8005C5AED /* TestVC.h */,
+				4AAE3C831D5467E8005C5AED /* TestVC.m */,
 				4AAE3C6B1D546758005C5AED /* Supporting Files */,
 			);
 			path = NYRefresh;
@@ -74,9 +83,28 @@
 		4AAE3C6B1D546758005C5AED /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4AAE3C711D546758005C5AED /* ViewController.h */,
+				4AAE3C721D546758005C5AED /* ViewController.m */,
+				4AAE3C741D546758005C5AED /* Main.storyboard */,
+				4AAE3C771D546758005C5AED /* Assets.xcassets */,
+				4AAE3C791D546758005C5AED /* LaunchScreen.storyboard */,
+				4AAE3C7C1D546758005C5AED /* Info.plist */,
 				4AAE3C6C1D546758005C5AED /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4AAE3C851D546AA7005C5AED /* NYRefreshHeader */ = {
+			isa = PBXGroup;
+			children = (
+				4AAE3C8C1D546DCE005C5AED /* NYRefreshHeader.h */,
+				4AAE3C8D1D546DCE005C5AED /* NYRefreshHeader.m */,
+				4AAE3C891D546C21005C5AED /* UIScrollView+NYRefresh.h */,
+				4AAE3C8A1D546C21005C5AED /* UIScrollView+NYRefresh.m */,
+				4AAE3C8F1D5479DA005C5AED /* UIView+NYRefresh.h */,
+				4AAE3C901D5479DA005C5AED /* UIView+NYRefresh.m */,
+			);
+			path = NYRefreshHeader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,8 +177,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AAE3C841D5467E8005C5AED /* TestVC.m in Sources */,
 				4AAE3C731D546758005C5AED /* ViewController.m in Sources */,
 				4AAE3C701D546758005C5AED /* AppDelegate.m in Sources */,
+				4AAE3C8E1D546DCE005C5AED /* NYRefreshHeader.m in Sources */,
+				4AAE3C8B1D546C21005C5AED /* UIScrollView+NYRefresh.m in Sources */,
+				4AAE3C911D5479DA005C5AED /* UIView+NYRefresh.m in Sources */,
 				4AAE3C6D1D546758005C5AED /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

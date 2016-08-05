@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "TestVC.h"
 
 @interface ViewController ()
 
@@ -16,12 +17,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(50, 50, 100, 100)];
+    btn.backgroundColor = [UIColor blueColor];
+    [btn addTarget:self action:@selector(test) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)test
+{
+    TestVC *vc = [[TestVC alloc]init];
+        UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:vc];
+    [self presentViewController:navVC animated:NO completion:nil];
 }
-
 @end
