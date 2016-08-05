@@ -17,8 +17,6 @@
 static const char NYRefreshHeaderKey = '\0';
 static const char NYRefreshHeaderIndexKey = '\1';
 
-
-
 #pragma mark Associate HeaderView
 - (void)setNy_header:(NYRefreshHeader *)ny_header
 {

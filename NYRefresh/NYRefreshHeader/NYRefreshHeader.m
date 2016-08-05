@@ -36,8 +36,10 @@ const CGFloat NYRefreshHeaderWidth = 200;
 
 - (instancetype)init
 {
-    self = [super initWithFrame:CGRectMake(0, 0, NYRefreshHeaderWidth, NYRefreshHeaderHeight)];
+    self = [super initWithFrame:CGRectMake(0, -NYRefreshHeaderHeight, NYRefreshHeaderWidth, NYRefreshHeaderHeight)];
     if (self) {
+        
+        self.isRefresh = NO;
         [self addSubview:self.statusLabel];
     }
     return self;
@@ -67,6 +69,7 @@ const CGFloat NYRefreshHeaderWidth = 200;
 - (void)setOffsetY:(CGFloat)offsetY
 {
     _offsetY = offsetY;
+    NSLog(@"offset %f",offsetY);
     //判断是否在拖动scrollview
     if (self.scrollView.dragging) {
         //判断是否在刷新状态

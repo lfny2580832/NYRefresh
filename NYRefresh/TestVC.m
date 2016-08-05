@@ -23,12 +23,13 @@
     if (self) {
         self.title = @"测试VC";
         self.view.backgroundColor = [UIColor grayColor];
+        self.automaticallyAdjustsScrollViewInsets = NO;
         
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 375, self.view.bounds.size.height) style:UITableViewStylePlain];
+        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, 375, self.view.bounds.size.height - 64) style:UITableViewStylePlain];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.tableFooterView = [UIView new];
-        self.tableView.ny_header = [NYRefreshHeader headerWithRefreshing];
+        self.tableView.ny_header = [[NYRefreshHeader alloc]init];
         [self.view addSubview:self.tableView];
 
     }
