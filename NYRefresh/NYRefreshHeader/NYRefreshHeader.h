@@ -14,13 +14,12 @@ typedef void (^NYHeadRefreshingBlock)();
 
 @interface NYRefreshHeader : UIView
 
+//当控件较多时会选用set枚举的方式统一设置
 @property (nonatomic, copy) NSString *titlePullDown;
 @property (nonatomic, copy) NSString *titleLoading;
 @property (nonatomic, copy) NSString *titleRelease;
 
 @property (nonatomic, copy) NYHeadRefreshingBlock refreshingBlock;
-
-
 
 
 - (instancetype)initWithRefreshingTarget:(id)target refreshingAction:(SEL)action;
