@@ -39,6 +39,13 @@
 - (void)loadData
 {
     NSLog(@"加载中");
+    
+    [self performSelector:@selector(test) withObject:nil afterDelay:2.0f];
+}
+
+- (void)test{
+    NSLog(@"结束加载");
+    [self.tableView.ny_header endRefreshing];
 }
 
 #pragma mark - UITableViewDataSource

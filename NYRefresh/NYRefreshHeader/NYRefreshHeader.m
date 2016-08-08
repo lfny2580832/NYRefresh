@@ -40,7 +40,7 @@ const CGFloat NYRefreshHeaderWidth = 200;
 #pragma mark 初始化方法
 - (instancetype)initWithRefreshingTarget:(id)target refreshingAction:(SEL)action
 {
-    self = [super initWithFrame:CGRectMake(0, -NYRefreshHeaderHeight, NYRefreshHeaderWidth, NYRefreshHeaderHeight)];
+    self = [self init];
     if (self) {
         self.refreshingTarget = target;
         self.refreshingAction = action;
@@ -50,7 +50,7 @@ const CGFloat NYRefreshHeaderWidth = 200;
 
 - (instancetype)initWithHeadRefreshingBlock:(NYHeadRefreshingBlock)block
 {
-    self = [super init];
+    self = [self init];
     if (self) {
         self.refreshingBlock = block;
     }
@@ -59,7 +59,7 @@ const CGFloat NYRefreshHeaderWidth = 200;
 
 - (instancetype)init
 {
-    self = [super init];
+    self = [super initWithFrame:CGRectMake(0, -NYRefreshHeaderHeight, NYRefreshHeaderWidth, NYRefreshHeaderHeight)];
     if (self) {
         self.isRefresh = NO;
         
@@ -95,7 +95,6 @@ const CGFloat NYRefreshHeaderWidth = 200;
 - (void)setOffsetY:(CGFloat)offsetY
 {
     _offsetY = offsetY;
-    NSLog(@"offset %f",offsetY);
     //判断是否在拖动scrollview
     if (self.scrollView.dragging) {
         //判断是否在刷新状态
@@ -105,8 +104,9 @@ const CGFloat NYRefreshHeaderWidth = 200;
             }else{
                 // 判断滑动方向 以让“松开以刷新”变回“下拉可刷新”状态
                 if (offsetY - _lastPosition > 5) {
-                    _lastPosition = offsetY;
+                    self.lastPosition = offsetY;
                     self.statusLabel.text = self.titleRelease;
+                    self.lastPosition = 0;
                 }
             }
         }
@@ -135,6 +135,7 @@ const CGFloat NYRefreshHeaderWidth = 200;
                 self.scrollView.contentOffset=CGPointMake(0, point.y - NYRefreshHeaderHeight * 1.5);
             }
             self.scrollView.contentInset=UIEdgeInsetsMake(50, 0, 0, 0);
+            self.lastPosition = 0;
         }];
     }
     
