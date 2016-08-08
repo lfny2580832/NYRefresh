@@ -29,11 +29,16 @@
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.tableFooterView = [UIView new];
-        self.tableView.ny_header = [[NYRefreshHeader alloc]init];
+        self.tableView.ny_header = [[NYRefreshHeader alloc]initWithRefreshingTarget:self refreshingAction:@selector(loadData)];
         [self.view addSubview:self.tableView];
 
     }
     return self;
+}
+
+- (void)loadData
+{
+    NSLog(@"加载中");
 }
 
 #pragma mark - UITableViewDataSource

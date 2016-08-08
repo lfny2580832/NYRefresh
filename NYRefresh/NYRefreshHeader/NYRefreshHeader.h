@@ -9,8 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "UIScrollView+NYRefresh.h"
 
+typedef void (^NYHeadRefreshingBlock)();
+
+
 @interface NYRefreshHeader : UIView
 
-+ (instancetype)headerWithRefreshing;
+@property (nonatomic, copy) NSString *titlePullDown;
+@property (nonatomic, copy) NSString *titleLoading;
+@property (nonatomic, copy) NSString *titleRelease;
+
+@property (nonatomic, copy) NYHeadRefreshingBlock refreshingBlock;
+
+
+
+
+- (instancetype)initWithRefreshingTarget:(id)target refreshingAction:(SEL)action;
+
+- (instancetype)initWithHeadRefreshingBlock:(NYHeadRefreshingBlock)block;
+
+- (void)endRefreshing;
+
 
 @end
