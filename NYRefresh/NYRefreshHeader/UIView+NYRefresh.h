@@ -22,4 +22,8 @@
 
 @property (nonatomic, assign) CGFloat centerY;
 
+@property (nonatomic, assign) CGFloat width;
+
+@property (nonatomic, assign) CGFloat height;
+
 @end

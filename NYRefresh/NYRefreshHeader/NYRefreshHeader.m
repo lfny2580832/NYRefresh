@@ -46,10 +46,8 @@ const CGFloat NYRefreshHeaderWidth = 200;
 #pragma mark 初始化方法
 - (instancetype)initWithRefreshingTarget:(id)target refreshingAction:(SEL)action
 {
-    self = [self init];
+    self = [self initWithFrame:CGRectMake(0, - NYRefreshHeaderHeight, NYRefreshHeaderWidth, NYRefreshHeaderHeight)];
     if (self) {
-        
-        
         self.refreshingTarget = target;
         self.refreshingAction = action;
     }
@@ -58,16 +56,16 @@ const CGFloat NYRefreshHeaderWidth = 200;
 
 - (instancetype)initWithHeadRefreshingBlock:(NYHeadRefreshingBlock)block
 {
-    self = [self init];
+    self = [self initWithFrame:CGRectMake(0, - NYRefreshHeaderHeight, NYRefreshHeaderWidth, NYRefreshHeaderHeight)];
     if (self) {
         self.refreshingBlock = block;
     }
     return self;
 }
 
-- (instancetype)init
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:CGRectMake(0, - NYRefreshHeaderHeight, NYRefreshHeaderWidth, NYRefreshHeaderHeight)];
+    self = [super initWithFrame:frame];
     if (self) {
         self.isRefresh = NO;
         self.refreshType = NYRefreshPullDown;
@@ -76,7 +74,7 @@ const CGFloat NYRefreshHeaderWidth = 200;
         self.titleRelease = @"释放以刷新";
         self.titlePullDown = @"下拉以刷新";
         
-        [self addSubview:self.statusLabel];
+//        [self addSubview:self.statusLabel];
         [self addSubview:self.imageView];
         
         [self loadRefreshImages];
@@ -107,6 +105,12 @@ const CGFloat NYRefreshHeaderWidth = 200;
     }else{
         [self.superview removeObserver:self forKeyPath:@"contentOffset"];
     }
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.centerX = self.window.centerX;
 }
 
 #pragma mark - KVO
@@ -261,7 +265,7 @@ const CGFloat NYRefreshHeaderWidth = 200;
 - (UIImageView *)imageView
 {
     if (!_imageView) {
-        _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 50)];
+        _imageView = [[UIImageView alloc]initWithFrame:CGRectMake((self.width - 80)/2, 0, 80, 50)];
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
         _imageView.image = [UIImage imageNamed:@"headpull01"];
     }
