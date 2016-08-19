@@ -11,7 +11,7 @@
 
 #import <objc/message.h>
 
-const CGFloat NYRefreshHeaderHeight = 30.0;
+const CGFloat NYRefreshHeaderHeight = 50.0;
 const CGFloat NYRefreshHeaderWidth = 200;
 
 #define NYRefreshMsgSend(...) ((void (*)(void *, SEL, UIView *))objc_msgSend)(__VA_ARGS__)
@@ -36,12 +36,17 @@ const CGFloat NYRefreshHeaderWidth = 200;
 @end
 
 @implementation NYRefreshHeader
+{
+    NSMutableArray *_refreshImages;
+}
 
 #pragma mark 初始化方法
 - (instancetype)initWithRefreshingTarget:(id)target refreshingAction:(SEL)action
 {
     self = [self init];
     if (self) {
+        
+        
         self.refreshingTarget = target;
         self.refreshingAction = action;
     }
@@ -59,7 +64,7 @@ const CGFloat NYRefreshHeaderWidth = 200;
 
 - (instancetype)init
 {
-    self = [super initWithFrame:CGRectMake(0, -NYRefreshHeaderHeight, NYRefreshHeaderWidth, NYRefreshHeaderHeight)];
+    self = [super initWithFrame:CGRectMake(0, - NYRefreshHeaderHeight, NYRefreshHeaderWidth, NYRefreshHeaderHeight)];
     if (self) {
         self.isRefresh = NO;
         
@@ -67,11 +72,26 @@ const CGFloat NYRefreshHeaderWidth = 200;
         self.titleRelease = @"释放以刷新";
         self.titlePullDown = @"下拉以刷新";
         
-        [self addSubview:self.statusLabel];
+//        [self addSubview:self.statusLabel];
         [self addSubview:self.imageView];
+        
+        [self loadRefreshImages];
+
     }
     return self;
 }
+
+- (void)loadRefreshImages
+{
+    _refreshImages = [[NSMutableArray alloc]initWithCapacity:0];
+    for (int i = 50; i < 120; i ++) {
+        [_refreshImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"headrefresh%03d",i]]];
+    }
+    self.imageView.animationImages = _refreshImages;
+    self.imageView.animationDuration = 1.4;
+    self.imageView.animationRepeatCount = 0;
+}
+
 #pragma mark Override
 - (void)willMoveToSuperview:(UIView *)newSuperview
 {
@@ -125,10 +145,21 @@ const CGFloat NYRefreshHeaderWidth = 200;
 
 - (void)setPullDownImage
 {
-    int imageIndex = self.offsetY /2;
-    NSLog(@"index %d",imageIndex);
-    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"headRefresh%02d",imageIndex]];
-    self.imageView.image = image;
+    //手在屏幕上下拉动时
+    if (self.scrollView.dragging)
+    {
+        if (self.offsetY > 25 && self.offsetY < 75)
+        {
+            int imageIndex = (int)(self.offsetY- 25);
+            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"headpull%02d",imageIndex]];
+            self.imageView.image = image;
+        }
+        else if (self.offsetY >= 75)
+        {
+            UIImage *image = [UIImage imageNamed:@"headpull49"];
+            self.imageView.image = image;
+        }
+    }
 }
 
 #pragma mark 开启 关闭刷新
@@ -138,15 +169,13 @@ const CGFloat NYRefreshHeaderWidth = 200;
         self.isRefresh = YES;
         self.statusLabel.text = self.titleLoading;
         
+        //执行刷新动画
+        [self.imageView startAnimating];
+        
         // 设置刷新状态_scrollView的位置
         [UIView animateWithDuration:0.3 animations:^
         {
-//            CGPoint point = self.scrollView.contentOffset;
-//            if (point.y > - NYRefreshHeaderHeight * 1.5)
-//            {
-//                self.scrollView.contentOffset=CGPointMake(0, point.y - NYRefreshHeaderHeight * 1.5);
-//            }
-            self.scrollView.contentInset=UIEdgeInsetsMake(50, 0, 0, 0);
+            self.scrollView.contentInset = UIEdgeInsetsMake(75, 0, 0, 0);
             self.lastPosition = 0;
         }];
     }
@@ -162,10 +191,15 @@ const CGFloat NYRefreshHeaderWidth = 200;
         [UIView animateWithDuration:0.3 animations:^{
             CGPoint point= _scrollView.contentOffset;
             if (point.y!=0) {
-                _scrollView.contentOffset=CGPointMake(0, point.y + NYRefreshHeaderHeight * 1.5);
+//                _scrollView.contentOffset=CGPointMake(0, point.y + NYRefreshHeaderHeight * 1.5);
+                _scrollView.contentOffset=CGPointMake(0, point.y + 75);
+
             }
             self.statusLabel.text = self.titlePullDown;
-            self.scrollView.contentInset=UIEdgeInsetsMake(0, 0, 0, 0);
+            self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        } completion:^(BOOL finished) {
+            [self.imageView stopAnimating];
+            self.imageView.image = [UIImage imageNamed:@"headpull01"];
         }];
     });
 }
@@ -198,7 +232,9 @@ const CGFloat NYRefreshHeaderWidth = 200;
 - (UIImageView *)imageView
 {
     if (!_imageView) {
-        _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, NYRefreshHeaderHeight, NYRefreshHeaderHeight)];
+        _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 50)];
+        _imageView.contentMode = UIViewContentModeScaleAspectFill;
+        _imageView.image = [UIImage imageNamed:@"headpull01"];
     }
     return _imageView;
 }
