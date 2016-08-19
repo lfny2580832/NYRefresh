@@ -11,6 +11,12 @@
 
 typedef void (^NYHeadRefreshingBlock)();
 
+typedef NS_ENUM(NSInteger, NYRefreshHeadType)
+{
+    NYRefreshPullDown,
+    NYRefreshLoading,
+    NYRefreshRelease
+};
 
 @interface NYRefreshHeader : UIView
 

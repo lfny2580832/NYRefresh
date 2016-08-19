@@ -27,6 +27,9 @@ const CGFloat NYRefreshHeaderWidth = 200;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *statusLabel;
 
+///RefreshType
+@property (nonatomic, assign) NYRefreshHeadType refreshType;
+
 ///Target
 @property (weak, nonatomic) id refreshingTarget;
 
@@ -67,12 +70,13 @@ const CGFloat NYRefreshHeaderWidth = 200;
     self = [super initWithFrame:CGRectMake(0, - NYRefreshHeaderHeight, NYRefreshHeaderWidth, NYRefreshHeaderHeight)];
     if (self) {
         self.isRefresh = NO;
+        self.refreshType = NYRefreshPullDown;
         
         self.titleLoading = @"加载中";
         self.titleRelease = @"释放以刷新";
         self.titlePullDown = @"下拉以刷新";
         
-//        [self addSubview:self.statusLabel];
+        [self addSubview:self.statusLabel];
         [self addSubview:self.imageView];
         
         [self loadRefreshImages];
@@ -112,6 +116,24 @@ const CGFloat NYRefreshHeaderWidth = 200;
     }
 }
 
+#pragma mark 设置刷新状态
+- (void)setRefreshType:(NYRefreshHeadType)refreshType
+{
+    _refreshType = refreshType;
+    if (refreshType == NYRefreshRelease)
+    {
+        self.statusLabel.text = self.titleRelease;
+    }
+    else if (refreshType == NYRefreshLoading)
+    {
+        self.statusLabel.text = self.titleLoading;
+    }
+    else if (refreshType == NYRefreshPullDown)
+    {
+        self.statusLabel.text = self.titlePullDown;
+    }
+}
+
 #pragma mark SetOffsetY
 - (void)setOffsetY:(CGFloat)offsetY
 {
@@ -121,23 +143,29 @@ const CGFloat NYRefreshHeaderWidth = 200;
     [self setPullDownImage];
     
     //判断是否在拖动scrollview
-    if (self.scrollView.dragging) {
+    if (self.scrollView.dragging)
+    {
         //判断是否在刷新状态
         if (!self.isRefresh) {
-            if (offsetY < NYRefreshHeaderHeight * 1.5) {
-                self.statusLabel.text = self.titlePullDown;
-            }else{
+            if (offsetY < NYRefreshHeaderHeight * 1.5)
+            {
+                self.refreshType = NYRefreshPullDown;
+            }
+            else{
                 // 判断滑动方向 以让“松开以刷新”变回“下拉可刷新”状态
                 if (offsetY - _lastPosition > 5) {
                     self.lastPosition = offsetY;
-                    self.statusLabel.text = self.titleRelease;
                     self.lastPosition = 0;
+                    
+                    self.refreshType = NYRefreshRelease;
                 }
             }
         }
-    }else{
+    }
+    else
+    {
         //进入刷新状态
-        if ([self.statusLabel.text isEqualToString:self.titleRelease]) {
+        if (self.refreshType == NYRefreshRelease) {
             [self beginRefreshing];
         }
     }
@@ -167,7 +195,7 @@ const CGFloat NYRefreshHeaderWidth = 200;
 {
     if (!self.isRefresh) {
         self.isRefresh = YES;
-        self.statusLabel.text = self.titleLoading;
+        self.refreshType = NYRefreshLoading;
         
         //执行刷新动画
         [self.imageView startAnimating];
@@ -195,9 +223,9 @@ const CGFloat NYRefreshHeaderWidth = 200;
                 _scrollView.contentOffset=CGPointMake(0, point.y + 75);
 
             }
-            self.statusLabel.text = self.titlePullDown;
             self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         } completion:^(BOOL finished) {
+            self.refreshType = NYRefreshPullDown;
             [self.imageView stopAnimating];
             self.imageView.image = [UIImage imageNamed:@"headpull01"];
         }];
@@ -221,8 +249,9 @@ const CGFloat NYRefreshHeaderWidth = 200;
 - (UILabel *)statusLabel
 {
     if (!_statusLabel) {
-        _statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 100, NYRefreshHeaderHeight)];
+        _statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(70, 25, 100, 25)];
         _statusLabel.text = _titlePullDown;
+        
         _statusLabel.textAlignment = NSTextAlignmentCenter;
         
     }
